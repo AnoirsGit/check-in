@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   has_many :notifications, as: :recipient
   has_many :services
+  has_many :working_times
 
   def set_code
     get_code
