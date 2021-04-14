@@ -3,7 +3,7 @@ class WorkingTimesController < ApplicationController
 
   # GET /working_times or /working_times.json
   def index
-    @working_times = WorkingTime.all
+    @working_times = WorkingTime.where()
   end
 
   # GET /working_times/1 or /working_times/1.json
