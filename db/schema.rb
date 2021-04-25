@@ -53,9 +53,10 @@ ActiveRecord::Schema.define(version: 2021_04_25_141419) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["title"], name: "index_categories_on_title", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|

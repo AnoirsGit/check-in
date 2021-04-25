@@ -13,6 +13,10 @@ class User < ApplicationRecord
   has_many :services
   has_many :working_times
 
+  validates :email, presence: true, uniqueness: true
+  validates :encrypted_password, presence: true
+
+
   def set_code
     get_code
 

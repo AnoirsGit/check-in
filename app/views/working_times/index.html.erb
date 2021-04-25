@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-sm-6">
     <h1>My Working Times</h1>
-    <p>Total <%= "#{@total.round(3)} hrs" %></p>
+    <p>Total <%= "#{@total.round(3)} hrs worked" %></p>
     <div class="m-3">
       <%= link_to 'Last Week', working_times_path(week: true), class: 'btn btn-info' %>
 
