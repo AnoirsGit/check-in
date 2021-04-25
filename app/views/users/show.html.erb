@@ -11,9 +11,20 @@
     <% else %>
       <h3>You have access to:</h3>
       <% @owned_grants.each do |g| %>
-        <p><%= User.find(g.target).email %></p>
+        <p>
+          <div class="row">
+            <div class="col-6">
+              <%= User.find(g.target).email %>
+            </div>
+
+            <div class="col-6">
+              <%= link_to 'Add new record', new_working_time_path(user_id: g.target), class: 'btn btn-light' %>
+            </div>
+          </div>
+        </p>
       <% end %>
     <% end %>
+    <%= link_to 'GET ACCESS', new_grant_path, class: 'btn btn-success' %>
   </div>
   <div class="col-6">
     <% if @gaved_grants.empty? %>
@@ -24,5 +35,8 @@
         <p><%= User.find(g.owner).email %></p>
       <% end %>
     <% end %>
+    <div class="col-8 alert alert-primary">
+      <p>You can give access to other employees<br> by sharing your code: <b><%= @user.code %></b></p>
+    </div>
   </div>
 </div>

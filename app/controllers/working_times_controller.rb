@@ -1,4 +1,6 @@
 class WorkingTimesController < ApplicationController
+  before_action :set_user, only: [:new]
+  before_action :check_grant, only: [:new]
   before_action :set_working_time, only: %i[ show edit update destroy ]
   before_action :set_time, only: %i[ create update ]
 
@@ -35,7 +37,7 @@ class WorkingTimesController < ApplicationController
 
   # GET /working_times/new
   def new
-    @working_time = WorkingTime.new
+    @working_time = WorkingTime.new(user_id: @user.id)
   end
 
   # GET /working_times/1/edit
@@ -90,22 +92,40 @@ class WorkingTimesController < ApplicationController
   end
 
   private
+
+    def set_user
+      @user = User.find(params[:user_id])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_working_time
       @working_time = WorkingTime.find(params[:id])
     end
 
-  def set_time
-    @started_at =DateTime.civil(params[:started_at][:year].to_i, params[:started_at][:month].to_i, params[:started_at][:day].to_i,
-                               params[:started_at][:hour].to_i,params[:started_at][:minute].to_i, params[:started_at][:second].to_i)
+    def check_grant
+      if @user.id != current_user.id && Grant.find_by(owner: current_user.id, target: @user.id).nil?
+        redirect_to root_path, alert: "You don't have access to visit this page!"
+      end
+    end
 
-    @ended_at =DateTime.civil(params[:ended_at][:year].to_i, params[:ended_at][:month].to_i, params[:ended_at][:day].to_i,
-                             params[:ended_at][:hour].to_i,params[:ended_at][:minute].to_i, params[:ended_at][:second].to_i)
+    def set_time
+      @started_at =DateTime.civil(params[:started_at][:year].to_i,
+                                  params[:started_at][:month].to_i,
+                                  params[:started_at][:day].to_i,
+                                  params[:started_at][:hour].to_i,
+                                  params[:started_at][:minute].to_i,
+                                  params[:started_at][:second].to_i)
 
-  end
+      @ended_at =DateTime.civil(params[:ended_at][:year].to_i,
+                                params[:ended_at][:month].to_i,
+                                params[:ended_at][:day].to_i,
+                                params[:ended_at][:hour].to_i,
+                                params[:ended_at][:minute].to_i,
+                                params[:ended_at][:second].to_i)
+    end
 
     # Only allow a list of trusted parameters through.
     def working_time_params
-      params.require(:working_time).permit(:bio, :category_id).merge(user_id: current_user.id)
+      params.require(:working_time).permit(:bio, :category_id, :user_id)
     end
 end

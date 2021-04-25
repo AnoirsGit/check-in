@@ -19,6 +19,7 @@ end
   resources :users, only: [:show]
   resources :working_times
   resources :categories
+  resources :grants, only: [:new, :create, :destroy]
 
   get 'start_timer', to: 'working_times#start_timer'
   get 'end_timer', to: 'working_times#end_timer'

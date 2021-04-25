@@ -4,10 +4,13 @@
   to work in flexi-time schedule.
 </p>
 
-<% if user_signed_in? %>
-  <% if current_user.can_start_timer? %>
-    <%= link_to 'Start timer', start_timer_path, class: 'btn btn-primary' %>
-  <% else %>
-    <%= link_to 'End timer', end_timer_path, class: 'btn btn-danger' %>
+<div>
+  <% if user_signed_in? %>
+    <% if current_user.can_start_timer? %>
+      <%= link_to 'Start timer', start_timer_path, class: 'btn btn-primary' %>
+    <% else %>
+      <%= link_to 'End timer', end_timer_path, class: 'btn btn-danger' %>
+    <% end %>
   <% end %>
-<% end %>
+</div>
+<%= image_tag 'timer.png', class: 'm-5' %>

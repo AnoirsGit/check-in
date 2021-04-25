@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+  <%= form.hidden_field :user_id, value: working_time.user_id %>
+
   <div class="form-group">
     <%= form.label :started_at %>
     <%= select_datetime Date.today, :prefix => :started_at, class: 'form-control', required: true %>
