@@ -5,7 +5,7 @@
 </p>
 
 <% if user_signed_in? %>
-  <% if current_user.working_times.last.ended_at != nil %>
+  <% if current_user.can_start_timer? %>
     <%= link_to 'Start timer', start_timer_path, class: 'btn btn-primary' %>
   <% else %>
     <%= link_to 'End timer', end_timer_path, class: 'btn btn-danger' %>

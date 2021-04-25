@@ -18,6 +18,9 @@
   <dt>Bio:</dt>
   <dd><%= @working_time.bio %></dd>
 
+  <dt>Category:</dt>
+  <dd><%= link_to @working_time.category.title, category_path(@working_time.category) %></dd>
+
   <dt>User:</dt>
   <dd><%= @working_time.user.email %></dd>
 

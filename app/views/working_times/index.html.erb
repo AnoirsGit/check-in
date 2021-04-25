@@ -4,11 +4,19 @@
 <div class="row">
   <div class="col-sm-6">
     <h1>My Working Times</h1>
+    <p>Total <%= "#{@total.round(3)} hrs" %></p>
+    <div class="mb-2">
+      <%= link_to 'Last Week', working_times_path(week: true), class: 'btn btn-info' %>
+    </div>
   </div>
 
   <div class="col-sm-6 text-right">
   <%= link_to new_working_time_path, class: 'btn btn-primary' do %>
-    Add New Working time
+    Create
+  <% end %>
+
+  <%= link_to new_category_path, class: 'btn btn-primary' do %>
+    Add Category
   <% end %>
   </div>
 </div>
@@ -17,14 +25,12 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-    
-
-            <th>Started at</th>
-            <th>Ended at</th>
-            <th>Bio</th>
-            <th>User</th>
-            
-          <th></th>
+        <th>Started at</th>
+        <th>Ended at</th>
+        <th>Category</th>
+        <th>Bio</th>
+        <th>User</th>
+        <th></th>
         
       </tr>
     </thead>
@@ -32,12 +38,11 @@
     <tbody>
       <% @working_times.each do |working_time| %>
         <%= content_tag :tr, id: dom_id(working_time), class: dom_class(working_time) do %>
-          
-
-                      <td><%= print_time working_time.started_at %></td>
-                      <td><%= print_time working_time.ended_at %></td>
-                      <td><%= working_time.bio %></td>
-                      <td><%= working_time.user.email %></td>
+        <td><%= print_time working_time.started_at %></td>
+        <td><%= print_time working_time.ended_at %></td>
+        <td><%= link_to working_time.category.title, category_path(working_time.category) %></td>
+        <td><%= working_time.bio %></td>
+        <td><%= working_time.user.email %></td>
           
           
             <td><%= link_to 'Show', working_time %></td>

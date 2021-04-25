@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :categories
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
 authenticate :user, lambda { |u| u.admin? } do
@@ -17,6 +18,7 @@ end
 
   resources :users, only: [:show]
   resources :working_times
+  resources :categories
 
   get 'start_timer', to: 'working_times#start_timer'
   get 'end_timer', to: 'working_times#end_timer'
