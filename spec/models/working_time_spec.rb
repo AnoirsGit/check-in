@@ -18,7 +18,7 @@ RSpec.describe WorkingTime, type: :model do
 
   it 'saves with valid attributes' do
     category = Category.create(title: 'abc')
-    
+
     user = User.create(email: 'a@a.a',
                        password: '123456',
                        password_confirmation: '123456')
