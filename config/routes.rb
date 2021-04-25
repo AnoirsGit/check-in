@@ -15,9 +15,11 @@ end
 
   devise_for :users
 
-  resources :users, only: [:show] do
-    resources :working_times, shallow: true
-  end
+  resources :users, only: [:show]
+  resources :working_times
+
+  get 'start_timer', to: 'working_times#start_timer'
+  get 'end_timer', to: 'working_times#end_timer'
 
   root to: 'home#index'
 end

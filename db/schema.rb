@@ -107,8 +107,8 @@ ActiveRecord::Schema.define(version: 2021_04_05_203703) do
   end
 
   create_table "working_times", force: :cascade do |t|
-    t.string "started_at"
-    t.string "ended_at"
+    t.datetime "started_at"
+    t.datetime "ended_at"
     t.string "bio"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
