@@ -1,3 +1,28 @@
-<p><%= @user.name %></p>
-<p><%= @user.email %></p>
-<p><%= @user.code %></p>
+<h2>Profile Page</h2>
+<p>Name: <%= @user.name %></p>
+<p>Email: <%= @user.email %></p>
+<p>Employee Code: <%= @user.code %></p>
+<hr>
+
+<div class="row">
+  <div class="col-6">
+    <% if @owned_grants.empty? %>
+      <h3>You don't have any access to the other users</h3>
+    <% else %>
+      <h3>You have access to:</h3>
+      <% @owned_grants.each do |g| %>
+        <p><%= User.find(g.target).email %></p>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-6">
+    <% if @gaved_grants.empty? %>
+      <h3>You don't gave any access to the other users</h3>
+    <% else %>
+      <h3>You gave access to:</h3>
+      <% @gaved_grants.each do |g| %>
+        <p><%= User.find(g.owner).email %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>

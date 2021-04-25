@@ -16,8 +16,17 @@ class WorkingTimesController < ApplicationController
   end
 
   def index
-    @working_times = current_user.working_times
-    @total = current_user.get_total_time
+    if params[:week]
+      @working_times = current_user.working_times.where('ended_at >= ?',  DateTime.now - 1.week)
+      @total = current_user.get_total_time(@working_times)
+    elsif params[:month]
+      @working_times = current_user.working_times.where('ended_at >= ?',  DateTime.now - 1.month)
+      @total = current_user.get_total_time(@working_times)
+    else
+      @working_times = current_user.working_times
+      @total = current_user.get_total_time(@working_times)
+    end
+
   end
 
   # GET /working_times/1 or /working_times/1.json
