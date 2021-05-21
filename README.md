@@ -3,22 +3,12 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+Installation process:
 
-* Ruby version
+1. Download this project
+2. run 'bundle'
+3. run 'rails db:setup'
+4. run 'yarn install'
+5. run 'rails s'
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Make sure you have ruby, rails, yarn, bundle installed.
