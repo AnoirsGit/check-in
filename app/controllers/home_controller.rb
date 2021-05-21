@@ -7,4 +7,8 @@ class HomeController < ApplicationController
 
   def privacy
   end
+
+  def calendar
+
+  end
 end

@@ -52,6 +52,13 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'pagy'
+
+gem 'jquery-ui-rails'
+gem 'acts_as_list'
+
+gem "simple_calendar", "~> 2.4"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bootstrap', '~> 4.5'

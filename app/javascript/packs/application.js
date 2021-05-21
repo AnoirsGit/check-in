@@ -4,6 +4,9 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
+require('jquery')
+require("jquery-ui/widget")
+require("jquery-ui/ui/widgets/sortable")
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
