@@ -18,5 +18,6 @@ end
   root to: 'home#index'
 
   get 'calendar', to: 'home#calendar'
+  get 'rooms/:id', to: 'rooms#show'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
