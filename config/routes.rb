@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :tweets
   resources :posts
   resources :blog_posts
   get '/privacy', to: 'home#privacy'
@@ -19,5 +20,7 @@ end
 
   get 'calendar', to: 'home#calendar'
   get 'rooms/:id', to: 'rooms#show'
+
+  resources :tweets
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

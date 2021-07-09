@@ -5,7 +5,7 @@
 
 require("@rails/ujs").start()
 require('jquery')
-require("turbolinks").start()
+import "@hotwired/turbo-rails"
 require("@rails/activestorage").start()
 require("channels")
 require("local-time").start()
@@ -19,3 +19,5 @@ $(document).on("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
   $('[data-toggle="popover"]').popover()
 })
+
+import "controllers"
