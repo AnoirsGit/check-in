@@ -6,7 +6,7 @@
 require("@rails/ujs").start()
 require('jquery')
 import "@hotwired/turbo-rails"
-require("@rails/activestorage").start()
+// require("@rails/activestorage").start()
 require("channels")
 require("local-time").start()
 
