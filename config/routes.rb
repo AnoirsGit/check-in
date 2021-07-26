@@ -2,6 +2,14 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   resources :tweets
+  namespace :posts do
+    resource :bulk, controller: :bulk do
+      collection do
+        post 'publish'
+        post 'delete'
+      end
+    end
+  end
   resources :posts
   resources :blog_posts
   get '/privacy', to: 'home#privacy'

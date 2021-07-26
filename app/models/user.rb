@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_person_name
 
   has_many :notifications, as: :recipient
-  has_many :services
-  has_many :working_times
+
+  has_many :posts
 
   validates :email, presence: true, uniqueness: true
   validates :encrypted_password, presence: true
