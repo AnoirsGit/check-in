@@ -12,9 +12,14 @@ Rails.application.routes.draw do
   end
   resources :posts
   resources :blog_posts
+  resources :projects do
+    member do
+      post :add_user
+    end
+  end
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
-authenticate :user, lambda { |u| u.admin? } do
+  authenticate :user, lambda { |u| u.admin? } do
   mount Sidekiq::Web => '/sidekiq'
 
   namespace :madmin do

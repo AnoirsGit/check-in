@@ -7,8 +7,12 @@ class User < ApplicationRecord
   has_person_name
 
   has_many :notifications, as: :recipient
-
+  has_many :project_users
+  has_many :project_tasks
   has_many :posts
+
+  has_many :projects, through: :project_users
+  has_many :tasks, through: :project_tasks
 
   validates :email, presence: true, uniqueness: true
   validates :encrypted_password, presence: true
