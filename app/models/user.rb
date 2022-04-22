@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :posts
 
   has_many :projects, through: :project_users
-  has_many :tasks, through: :project_tasks
+  has_many :tasks, through: :user_tasks
 
   validates :email, presence: true, uniqueness: true
   validates :encrypted_password, presence: true

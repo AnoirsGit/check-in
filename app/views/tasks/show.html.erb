@@ -1,0 +1,26 @@
+<h1>
+  <%= @task.title %>
+</h1>
+<p>
+  <%= @task.description %>
+</p>
+<div class="d-flex">
+    deadline:
+  <div class="tag ml-1">
+    <%= @task.deadline.strftime("%y/%m/%d") %>
+  </div>
+</div>
+<div>status: <%= @task.status %></div>
+<% @task.users.each do |user| %>
+  <div class="d-flex">
+    <%= image_tag avatar_path(current_user, size: 40), height: 20, width: 20, class: "rounded mx-1" %>
+    <%= user.email %>
+  </div>
+<% end %>
+<% if current_user.admin? %>
+    Add user: 
+    <%= form_with class:"d-flex", url: add_user_project_task_path(@task) do |f| %>
+      <%= f.email_field :email, class: 'form-control w-160px mx-2', placeholder: 'user email' %>
+      <%= f.submit "Add", class: "btn btn-primary" %>
+    <% end %>
+<% end %>

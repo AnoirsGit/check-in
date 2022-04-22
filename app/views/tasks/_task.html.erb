@@ -1,0 +1,23 @@
+<div class="p-3 d-flex flex-column shadow rounded bg-light">
+  <div class="d-flex justify-content-between">
+    <h4><%= link_to task.title, project_task_path(@project,task)%></h4>
+    <small class="text-grey"><%= task.created_at.strftime("%y/%m/%d")%></small>
+    <%= link_to edit_project_task_path(@project,task), class: 'btn btn-primary' do %>
+      <i class="fa fa-edit"></i>
+    <% end %>
+  </div>
+  <div class="h-64px mb-2"> <%= truncate(task.description, :length => 30, :omission => '... (continued)') %></div>
+  <% task.users.each do |user| %>
+    <div class="d-flex">
+      <%= image_tag avatar_path(current_user, size: 40), height: 20, width: 20, class: "rounded mx-1" %>
+      <%= user.email %>
+    </div>
+  <% end %>
+
+  <div class="d-flex justify-content-between">
+    <div class="d-flex h-64">deadline: 
+      <div class="tag ml-1"><%= task.deadline.strftime("%y/%m/%d") %></div>
+    </div>
+    <div>status: <%= task.status %></div>
+  </div>
+</div>

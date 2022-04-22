@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    project_users
   end
 
   def new
@@ -22,6 +23,21 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+  end
+
+  def create
+    @project = Project.new(project_params)
+    @project.users.push(current_user)
+
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to @project, notice: "Post was successfully created." }
+        format.json { render :show, status: :created, location: @project }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
@@ -48,6 +64,10 @@ class ProjectsController < ApplicationController
   
   def set_project
     @project = Project.find(params[:id])
+  end
+
+  def project_users
+    @users = @project.users
   end
 
   def admin?

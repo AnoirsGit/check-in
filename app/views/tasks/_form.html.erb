@@ -1,0 +1,49 @@
+<%= form_with(model: [@project, @task], local: true) do |form| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :deadline %>
+    <%= form.date_field :deadline, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :users %>
+    <%= form.email_field :users_emails, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <% if @task.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Destroy', [@project, @task], method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if @task.persisted? %>
+      <%= link_to "Cancel",  [@project, @task], class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", [@project, @task], class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,6 +1,16 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :projects do
+    resources :tasks, except: [:index] do
+      member do
+        post :add_user
+      end
+    end
+    member do
+      post :add_user
+    end
+  end
   resources :tweets
   namespace :posts do
     resource :bulk, controller: :bulk do
@@ -12,11 +22,6 @@ Rails.application.routes.draw do
   end
   resources :posts
   resources :blog_posts
-  resources :projects do
-    member do
-      post :add_user
-    end
-  end
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
   authenticate :user, lambda { |u| u.admin? } do
@@ -29,7 +34,7 @@ end
   resources :notifications, only: [:index]
   resources :announcements, only: [:index]
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
-  root to: 'home#index'
+  root to: 'projects#index'
 
   get 'calendar', to: 'home#calendar'
   get 'rooms/:id', to: 'rooms#show'

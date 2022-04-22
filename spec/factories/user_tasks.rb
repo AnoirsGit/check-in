@@ -1,7 +1,6 @@
 FactoryBot.define do
-  factory :task_project_user do
+  factory :user_task do
     user { nil }
-    project { nil }
     task { nil }
   end
 end

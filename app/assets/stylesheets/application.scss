@@ -26,6 +26,45 @@ body {
 font-family: "Gill Sans", sans-serif;
 }
 
+.product-sidebar{
+  background-color: #D0EBFF;
+  padding: 10px;
+  border-radius: 5px;
+  min-height: 300px;
+}
+
+.start-4{
+  left: 2rem;
+}
+
+
 .w-160px{
   width: 160px;
+}
+
+.h-64px{
+  height: 64px;
+}
+
+.board-col{
+  width: 296px;
+  background-color: #D0EBFF;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.tag{
+  color: #fff;
+  background-color: #357649;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 0.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.text-grey{
+  color: #828282;
 }
