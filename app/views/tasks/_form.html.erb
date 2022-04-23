@@ -11,9 +11,19 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: 'form-control' %>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <%= form.label :title %>
+        <%= form.text_field :title, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group">
+        <%= form.label :deadline %>
+        <%= form.date_field :deadline, class: 'form-control' %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
@@ -21,14 +31,25 @@
     <%= form.text_area :description, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :deadline %>
-    <%= form.date_field :deadline, class: 'form-control' %>
+<div class="row">
+    <div class="col-4">
+        <div class="form-group">
+        <%= form.label :status %>
+          <%= select_tag(:option, options_for_select(%i[draft to_do in_progress completed archived], selected: :option )) %>
   </div>
-
-  <div class="form-group">
-    <%= form.label :users %>
-    <%= form.email_field :users_emails, class: 'form-control' %>
+  </div>
+    <div class="col-4">
+       <div class="form-group">
+        <%= form.label :users %>
+        <%= form.collection_select :users, @project.users, :id, :email, class: 'form-control', multiple: true %>
+      </div>
+    </div>
+    <div class="col-4">
+       <div class="form-group">
+        <%= form.label :time_to_complete %>
+        <%= form.number_field :time_to_complete %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
@@ -37,6 +58,7 @@
         <%= link_to 'Destroy', [@project, @task], method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
       </div>
     <% end %>
+
 
     <%= form.submit class: 'btn btn-primary' %>
 

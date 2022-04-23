@@ -16,21 +16,15 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @project = Project.find(params[:project_id])
   end
 
   def edit 
   end
 
   def update
-    users = []
-    task_params[:users_emails].split(",").each do |email|
-      user = User.where(email: email)
-      users.push(user) if user.present?
-    end
-    update_params = task_params.permit(:title, :description, :status, :project_id, :deadline)
-
     respond_to do |format|
-      if @task.update(update_params.merge(users: users))
+      if @task.update(task_params)
         format.html { redirect_to @project, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -41,14 +35,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    users = []
-    task_params[:users_emails].split(",").each do |email|
-      user = User.where(email: email)
-      users.push(user) if user.present?
-    end
-    create_params = task_params.permit(:title, :description, :status, :project_id, :deadline)
-
-    @task = Task.new(create_params.merge(users: users))
+    @task = Task.new(task_params.merge(users: users))
     @task.project = Project.find(params[:project_id])
 
     respond_to do |format|
@@ -65,7 +52,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :deadline, :status, :project_id, :users_emails, :users)
+    params.require(:task).permit(:title, :description, :deadline, :status, :project_id, :users)
   end
 
   def set_task

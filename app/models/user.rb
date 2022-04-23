@@ -6,10 +6,11 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_person_name
 
-  has_many :notifications, as: :recipient
+  has_many :posts
   has_many :project_users
   has_many :project_tasks
-  has_many :posts
+  has_many :working_times
+  has_many :notifications, as: :recipient
 
   has_many :projects, through: :project_users
   has_many :tasks, through: :user_tasks
