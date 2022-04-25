@@ -84,6 +84,6 @@ class TasksController < ApplicationController
   end
 
   def to_time(seconds)
-    Time.at(seconds).utc.strftime("%H:%M")
+    Time.at(seconds).utc.strftime("%H:%M:%S")
   end
 end

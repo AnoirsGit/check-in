@@ -29,7 +29,7 @@ class WorkingTime < ApplicationRecord
 
   def interval_from_start
     ended_at = self.ended_at || DateTime.now
-    self.ended_at - started_at
+    ended_at.in_time_zone.utc - self.started_at
   end
 
   private
