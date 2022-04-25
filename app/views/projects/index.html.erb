@@ -39,13 +39,13 @@
           <% if current_user.admin? %>
             <td>
               <%= form_with class:"d-flex", url: add_user_project_path(project) do |f| %>
-                <%= f.email_field :email, class: 'form-control w-160px mx-2', placeholder: 'user email' %>
+                <%= f.collection_select :email, @all_users, :email, :email, class: 'form-control' %>
                 <%= f.submit "Add", class: "btn btn-primary" %>
               <% end %>
             </td>
           <% end %>
         <% end %>
       <% end %>
-    </tbody>
+</tbody>
   </table>
 </div>

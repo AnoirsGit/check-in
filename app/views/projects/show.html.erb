@@ -28,13 +28,12 @@
 <p><%= @project.description %></p>
 
 <% if @project.tasks.any? %>
-  <h2>Tasks</h2>
+  <h2>Tasks</h2>  
   <div class="d-flex">
   <div class="board-col">
-
-      <h3>Draft</h3>
-      <%= render @project.tasks.draft%>
-    </div>
+    <h3>Draft</h3>
+    <%= render @project.tasks.draft%>
+  </div>
   <div class="board-col">
     <h3>In Progress</h3>
       <%= render @project.tasks.in_progress%>

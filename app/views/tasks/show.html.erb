@@ -1,16 +1,47 @@
+
+
+<% if WorkingTime.ticking(current_user, @task).present? %>
+  <%= form_with class:"d-flex", url:  end_timer_project_task_path do |f| %>
+    <%byebug%>
+    <%= f.submit "End timer", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <%= form_with class:"d-flex", url:  start_timer_project_task_path do |f| %>
+    <%= f.submit "Start timer", class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
 <h1>
   <%= @task.title %>
 </h1>
 <p>
   <%= @task.description %>
 </p>
+
 <div class="d-flex">
     deadline:
   <div class="tag ml-1">
     <%= @task.deadline.strftime("%y/%m/%d") %>
   </div>
 </div>
-<div>status: <%= @task.status %></div>
+<p>
+  total hours: <%= @total_worked %>
+  today hours: <%= @total_today %>
+  time to complete: <%= @task.time_to_complete %>
+</p>
+<div class="d-flex justify-content-between align-items-center">
+  <p>status: <%= @task.status %></p>
+ <p>
+  total hours: <%= @total_worked %>
+</p>
+<p>
+  today hours: <%= @total_today %>
+</p>
+<p>
+  time to complete: <%= @task.time_to_complete %>
+</p>
+</div>
+
 <% @task.users.each do |user| %>
   <div class="d-flex">
     <%= image_tag avatar_path(current_user, size: 40), height: 20, width: 20, class: "rounded mx-1" %>
@@ -18,9 +49,11 @@
   </div>
 <% end %>
 <% if current_user.admin? %>
-    Add user: 
     <%= form_with class:"d-flex", url: add_user_project_task_path(@task) do |f| %>
+    <div class="d-flex">
+      <p>Add user:</p>
       <%= f.email_field :email, class: 'form-control w-160px mx-2', placeholder: 'user email' %>
-      <%= f.submit "Add", class: "btn btn-primary" %>
+    </div>
+    <%= f.submit "Add", class: "btn btn-primary" %>
     <% end %>
 <% end %>

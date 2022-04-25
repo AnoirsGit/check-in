@@ -35,13 +35,17 @@
     <div class="col-4">
         <div class="form-group">
         <%= form.label :status %>
-          <%= select_tag(:option, options_for_select(%i[draft to_do in_progress completed archived], selected: :option )) %>
+        <%= form.select(:status, options_for_select(%i[draft in_progress completed archived], selected: @task.status )) %>
   </div>
   </div>
     <div class="col-4">
-       <div class="form-group">
+     <div class="form-group">
         <%= form.label :users %>
-        <%= form.collection_select :users, @project.users, :id, :email, class: 'form-control', multiple: true %>
+        <%= form.select(:users, 
+           options_for_select( @project.users.map { |u| [u.email, u.id] }, { selected: @task.users.map(&:id) }),
+          {}, 
+          multiple: true, size: 4) 
+        %>
       </div>
     </div>
     <div class="col-4">

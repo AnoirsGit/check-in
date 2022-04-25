@@ -1,17 +1,30 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :add_user ]
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_user]
-
-  def show
-    @task = Task.find(params[:id])
-    @user_tasks = @task.user_tasks
-  end
-
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :add_user, :start_timer, :end_timer]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_user, :start_timer, :end_timer]
+  
   def add_user
     @user = User.find_by(email: params[:email])
     @task.users.push(@user)
     redirect_to projects_path
+  end
+
+  def start_timer
+    WorkingTime.start(current_user, @task)
+    redirect_to project_task_path(@project, @task)
+  end
+
+  def end_timer
+    WorkingTime.end(current_user, @task)
+    redirect_to project_task_path(@project, @task)
+  end
+  
+  def edit
+  end
+
+  def show
+    @total_today = to_time(WorkingTime.today_total_with_ticking(current_user, @task))
+    @total_worked = to_time(WorkingTime.total(current_user, @task))
   end
 
   def new
@@ -19,14 +32,12 @@ class TasksController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
-  def edit 
-  end
-
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @project, notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @project }
+        add_users
+        format.html { redirect_to @task.project, notice: "Post was successfully updated." }
+        format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -40,10 +51,10 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @project, notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @project }
+        format.html { redirect_to @task, notice: "Task was successfully updated." }
+        format.json { render :show, status: :ok, location: @task }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
@@ -51,8 +62,12 @@ class TasksController < ApplicationController
 
   private
 
+  def to_hours(seconds)
+    (seconds.to_i / 3600).floor(2)
+  end
+
   def task_params
-    params.require(:task).permit(:title, :description, :deadline, :status, :project_id, :users)
+    params.require(:task).permit(:title, :description, :deadline, :status, :project_id, :time_to_complete)
   end
 
   def set_task
@@ -61,5 +76,14 @@ class TasksController < ApplicationController
 
   def set_project
     @project = @task.project
+  end
+
+  def add_users
+    params[:task][:users] = params[:task][:users].filter(&:present?)
+    @task.update(users: params[:task][:users].map { |id| User.find(id) })
+  end
+
+  def to_time(seconds)
+    Time.at(seconds).utc.strftime("%H:%M")
   end
 end

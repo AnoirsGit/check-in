@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :tasks, except: [:index] do
       member do
         post :add_user
+        post :start_timer
+        post :end_timer
       end
     end
     member do

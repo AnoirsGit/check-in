@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
 
 
   def index
+    @all_users = User.all
   end
 
   def add_user

@@ -7,7 +7,6 @@ class Task < ApplicationRecord
   has_many :projects, through: :project_tasks
   
   scope :draft, -> { where(status: :draft) }
-  scope :to_do, -> { where(status: :to_do) }
   scope :in_progress, -> { where(status: :in_progress) }
   scope :completed, -> { where(status: :completed) }
   scope :archived, -> { where(status: :archived) }
@@ -16,5 +15,4 @@ class Task < ApplicationRecord
 
   private 
 
-  
 end
