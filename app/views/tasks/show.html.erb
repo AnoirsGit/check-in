@@ -1,9 +1,13 @@
 
 
-<% if WorkingTime.ticking(current_user, @task).present? %>
+<% if @ticking.present? %>
   <%= form_with class:"d-flex", url:  end_timer_project_task_path do |f| %>
-    <%byebug%>
-    <%= f.submit "End timer", class: "btn btn-primary" %>
+    <div class="d-flex justify-content-between">
+      <%= f.submit "End timer", class: "btn btn-primary" %>
+      
+      <h1 class="mx-5" id="timer" timervalue=<%= @ticking.interval_from_start %>></h1>
+
+    </div>
   <% end %>
 <% else %>
   <%= form_with class:"d-flex", url:  start_timer_project_task_path do |f| %>
@@ -24,22 +28,11 @@
     <%= @task.deadline.strftime("%y/%m/%d") %>
   </div>
 </div>
-<p>
-  total time: <%= @total_worked %>
-  today time: <%= @total_today %>
-  time to complete: <%= @task.time_to_complete %>
-</p>
 <div class="d-flex justify-content-between align-items-center">
   <p>status: <%= @task.status %></p>
- <p>
-  total hours: <%= @total_worked %>
-</p>
-<p>
-  today hours: <%= @total_today %>
-</p>
-<p>
-  time to complete: <%= @task.time_to_complete %> hours
-</p>
+  <p>total hours: <%= @total_worked %></p>
+  <p>today hours: <%= @total_today %></p>
+  <p>time to complete: <%= @task.time_to_complete %> hours</p>
 </div>
 
 <% @task.users.each do |user| %>

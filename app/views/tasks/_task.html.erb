@@ -23,7 +23,7 @@
     <p class="m-0">status: <%= task.status %></p>
     <div>
       <img src="https://cdn.iconscout.com/icon/free/png-256/time-3250679-2706281.png" width="20" height="20" />
-        <%= WorkingTime.total_hours(current_user, task) %>
+        <%=  Time.at(WorkingTime.total(current_user, @task)).utc.strftime("%H:%M") %>
         /<%= task.time_to_complete %>h
     </div>
   </div>

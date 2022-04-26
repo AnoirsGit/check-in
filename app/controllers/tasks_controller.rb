@@ -23,6 +23,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @ticking = WorkingTime.ticking(current_user, @task).first
     @total_today = to_time(WorkingTime.today_total_with_ticking(current_user, @task))
     @total_worked = to_time(WorkingTime.total(current_user, @task))
   end
@@ -46,11 +47,9 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params.merge(users: users))
-    @task.project = Project.find(params[:project_id])
-
     respond_to do |format|
       if @task.save
+        add_users
         format.html { redirect_to @task, notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
       else
