@@ -4,11 +4,9 @@
   </div>
 
   <div class="col-sm-6 text-right">
-    <% if current_user.admin? %>
       <%= link_to new_project_path, class: 'btn btn-primary' do %>
         Add New Project
       <% end %>
-    <% end %>
   </div>
 </div>
 
@@ -20,9 +18,6 @@
         <th>Description</th>
         <th>Deadline</th>
         <th>Users</th>
-        <% if current_user.admin? %>
-          <th>Add user</th>
-        <% end %>
       </tr>
     </thead>
 
@@ -36,7 +31,7 @@
             <%= image_tag avatar_path(current_user, size: 40), height: 20, width: 20, class: "rounded" %>
             <%= project.users.count %> users in project
           </td>
-          <% if current_user.admin? %>
+          <% if project.owner?(current_user) %>
             <td>
               <%= form_with class:"d-flex", url: add_user_project_path(project) do |f| %>
                 <%= f.collection_select :email, @all_users, :email, :email, class: 'form-control' %>

@@ -14,7 +14,7 @@
   <%= link_to projects_path, class: 'btn btn-default' do %>
     <i class="fa fa-arrow-left"></i>
   <% end %>
-  <% if current_user.admin? %>
+  <% if @project.owner?(current_user) %>
     <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
       Edit
     <% end %>

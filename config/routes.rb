@@ -36,6 +36,7 @@ end
   resources :notifications, only: [:index]
   resources :announcements, only: [:index]
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  resources :users
   root to: 'projects#index'
 
   get 'calendar', to: 'home#calendar'

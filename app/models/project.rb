@@ -8,14 +8,19 @@ class Project < ApplicationRecord
   scope :completed, -> { where(status: status[:completed]) }
   scope :archived, -> { where(status: status[:archived]) }
 
-  enum status: { 
-    draft: 0,
-    to_do: 1,
-    in_development: 2,
-    completed: 3,
-    archived: 4 
-  }
+  enum status: %i[draft to_do in_progress completed archived]
 
-  private 
+  def set_role(user, role)
+    project_user = ProjectUser.find_by(user: user, project: self)
+    project_user.role = role
+    project_user.save
+  end
 
+  def owner?(user)
+    ProjectUser.find_by(user: user, project: self, role: :owner).present?
+  end
+
+  def role?(user)
+    ProjectUser.find_by(user: user, project: self).role
+  end
 end

@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy, :add_user]
   before_action :user_projects, only: [:index]
-  before_action :admin?, only: [:new, :edit, :update, :destroy, :add_user]
+  before_action :owner?, only: [:edit, :update, :destroy, :add_user]
 
 
   def index
@@ -32,6 +32,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        @project.set_role(current_user, :owner)
         format.html { redirect_to @project, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
@@ -71,8 +72,8 @@ class ProjectsController < ApplicationController
     @users = @project.users
   end
 
-  def admin?
-    current_user.admin?
+  def owner?
+    @project.owner?(current_user)
   end
 
 end
