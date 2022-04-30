@@ -17,10 +17,24 @@ const createTimer = time => {
   }, 1000);
 }
 
+const toggleCollapse = () => {
+  d.querySelectorAll("[collapse]").forEach(collapseBtn => {
+
+    collapseBtn.addEventListener("click", e => {
+      const collapseBtnAttr = e.target.getAttribute("data-bs-target");
+      d.querySelectorAll(`${collapseBtnAttr}`).forEach(el => {
+        el.classList.toggle("show");
+      })
+
+    })
+  });
+}
+
 d.addEventListener("turbolinks:load", () => {
   let timerval = d.getElementById('timer');
-  if (timerval) createTimer(timerval.getAttribute("timervalue"))
+  if (timerval) createTimer(timerval.getAttribute("timervalue"));
 
+  toggleCollapse()
   var element = d.getElementById('room-id')
   if (element) {
     const room_id = element.getAttribute('data-room-id')

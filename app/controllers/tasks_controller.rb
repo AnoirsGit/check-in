@@ -47,13 +47,16 @@ class TasksController < ApplicationController
   end
 
   def create
+    @task = Task.new(task_params)
+    @project = Project.find(params[:project_id])
+    @task.project = @project
     respond_to do |format|
       if @task.save
         add_users
-        format.html { redirect_to @task, notice: "Task was successfully updated." }
+        format.html { redirect_to @task.project, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
