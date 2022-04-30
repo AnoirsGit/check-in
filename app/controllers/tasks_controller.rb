@@ -62,6 +62,20 @@ class TasksController < ApplicationController
     end
   end
 
+  def destroy
+    @task.destroy
+    respond_to do |format|
+      if @task.save
+        add_users
+        format.html { redirect_to @task.project, notice: "Post was successfully updated." }
+        format.json { render :show, status: :ok, location: @task }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def to_hours(seconds)
