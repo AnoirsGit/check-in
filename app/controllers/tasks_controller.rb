@@ -81,8 +81,12 @@ class TasksController < ApplicationController
   end
 
   def add_users
-    params[:task][:users] = params[:task][:users].filter(&:present?)
-    @task.update(users: params[:task][:users].map { |id| User.find(id) })
+    users = []
+    params[:task][:users].filter(&:present?).each do |user_id|
+      users.push(User.find(user_id)) if (@task.users.where(id: user_id).empty?)
+    end
+
+    @task.update(users: users)
   end
 
   def to_time(seconds)
