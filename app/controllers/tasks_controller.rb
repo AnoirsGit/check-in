@@ -64,6 +64,8 @@ class TasksController < ApplicationController
 
   def destroy
     UserTask.where(task_id: @task.id).destroy_all
+    WorkingTime.where(task_id: @task.id).destroy_all
+    ProjectTask.where(task_id: @task.id).destroy_all
     @task.destroy
     respond_to do |format|
         format.html { redirect_to @project, notice: "Post was successfully updated." }
