@@ -56,7 +56,6 @@ group :test do
 end
 
 gem 'pagy'
-
 gem 'jquery-ui-rails'
 gem 'acts_as_list'
 

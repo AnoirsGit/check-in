@@ -63,16 +63,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    UserTask.where(task_id: @task.id).destroy_all
     @task.destroy
     respond_to do |format|
-      if @task.save
-        add_users
-        format.html { redirect_to @task.project, notice: "Post was successfully updated." }
+        format.html { redirect_to @project, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
     end
   end
 

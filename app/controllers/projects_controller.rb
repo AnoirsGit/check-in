@@ -57,13 +57,8 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to @project, notice: "Post was successfully updated." }
+        format.html { redirect_to projects, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @project }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
     end
   end
 
